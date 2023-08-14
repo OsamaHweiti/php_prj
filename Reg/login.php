@@ -20,25 +20,41 @@ if($link)
       $password=mysqli_real_escape_string($link,$_POST['user_password']);
 
       $password=md5($password); 
-      
+      // QUERIYS FOR DB
       $sql="SELECT * FROM form WHERE  email='$username'  AND password='$password'";
       $result=mysqli_query($link,$sql);
-      
+      $logername = "SELECT username FROM form WHERE email='$username'  AND password='$password'" ;
+      $logname=mysqli_query($link,$logername);
       $admin = "SELECT * FROM form WHERE '$username' =  'o@admin.com'";
       $isadmin=mysqli_query($link,$admin);
+     
       if($result)
       {
      
         if( mysqli_num_rows($result)>=1)
         {
             // ADMIN IF TRUE PRINT OUT DB
-        
+            $row = mysqli_fetch_assoc($result);
+            $userFullName = $row['username'];
+            $mobile = $row['mobile'];
+            $email = $row['email'];
+
             $_SESSION['message']="You are now Loggged In";
             $_SESSION['username']=$username;
+            $_SESSION['FullName'] = $userFullName;
+            $_SESSION['mobile']=$mobile;
+            $_SESSION['email']=$email;
+
             $_SESSION["loggedin"] = TRUE;
-            header('location: index.php');
-            // echo "<script>" . "window.location.href='index.php';" . "</script>";
             
+            if ($username === 'o@admin.com') {
+              $_SESSION['isAdmin'] = true;
+              header('location: admin.php'); // Redirect admin to admin page
+          } else {
+               $_SESSION['isAdmin'] = false;
+              $_SESSION["loggedin"] = true;
+              header('location: index.php'); // Redirect normal user to index page
+          }
           }
        else
        {
@@ -78,7 +94,7 @@ if($link)
          
           <form action="<?= htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" novalidate>
             <div class="mb-3">
-              <label for="user_login" class="form-label">Email or username</label>
+              <label for="user_login" class="form-label">Email</label>
               <input type="text" class="form-control" name="user_login" id="user_login" value="">
               <small class="text-danger"></small>
             </div>
