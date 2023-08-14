@@ -24,18 +24,33 @@ if (isset($_POST["logout"])) {
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
   <link rel="stylesheet" href="./css/main.css">
   <link rel="shortcut icon" href="./img/favicon-16x16.png" type="image/x-icon">
-  
+  <style> 
+ body {
+  font-family: "Barlow Semi Condensed", sans-serif;
+      background-image: url("971.jpg");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-position: left center; /* Move the background image to the right */
+      min-height: 100vh;
+      overflow: hidden;
+  }
+  #wlc , #info {
+    color: white;
+  }
+</style>
+
 </head>
 <body>
   <div class="container">
-    <div class="alert alert-success my-5">
+    <div class="alert alert-success my-5 text-center h5" id="topwelc "style="background-color: #3a85fc;">
       Welcome ! You are now signed in to your account.
     </div>
     <!-- User profile -->
     <div class="row justify-content-center">
       <div class="col-lg-5 text-center">
         <img src="./img/blank-avatar.jpg" class="img-fluid rounded" alt="User avatar" width="180">
-        <h4 class="my-4" id="welc">Welcome to our site please login / sign up </h4>
+        <h4 class="my-4" id="welc" style="color:white;">Welcome to our site please login / sign up </h4>
         <h3 class="my-4" id="info"></h3>
         <button class="btn btn-primary" style="display: inline-block;" id="logout">Log Out</button>
         <a href="login.php" class="btn btn-primary" id="login" style="display: none;">Log in</a>
@@ -56,19 +71,22 @@ if (isset($_POST["logout"])) {
     var loginbtn = document.querySelector('#login');
     var signupbtn = document.querySelector('#signup');
     var logoutbtn = document.querySelector('#logout');
-    
+    var topwelc = document.querySelector('#topwelc');
     
     if (isloged) {
             logoutbtn.style.display = "inline-block";
             loginbtn.style.display = "none";
             signupbtn.style.display = "none";
-            welc.textContent= `Welcome ${firstName || name} to site`
-            info.textContent= `Mobile = ${mobile}
-            Email=${user}`
+            welc.textContent= `Welcome ${firstName || name} Enjoy your stay`
+            info.innerHTML= `Mobile: ${mobile} <br>
+            Email: ${user}`
+            topwelc.textContent = 'Welcome ! You are now signed in to your account.'
         } else {
             logoutbtn.style.display = "none";
             loginbtn.style.display = "inline-block";
             signupbtn.style.display = "inline-block";
+            
+            topwelc.textContent = 'Sign in to continue in our site'
         }
 
         logoutbtn.addEventListener('click', (e) => {

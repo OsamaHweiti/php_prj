@@ -2,6 +2,7 @@
 
 body {
   font-family: "Barlow Semi Condensed", sans-serif;
+  
 }
 
 .alert {
@@ -12,3 +13,4 @@ body {
 .form-wrap .form-label {
   font-weight: 600;
 }
+
